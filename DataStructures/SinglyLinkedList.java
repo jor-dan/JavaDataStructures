@@ -66,6 +66,18 @@ public class SinglyLinkedList<T> {
         return false;
     }
 
+    public void reverse() {
+        Node current = head;
+        Node previous = null;
+        while (current != null) {
+            Node next = current.next;
+            current.next = previous;
+            previous = current;
+            current = next;
+        }
+        head = previous;
+    }
+
     public T get(int index) {
         if (head == null || index < 0 || index >= size()) return null;
         for (Node current = head; index >= 0; index--) {
