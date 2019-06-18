@@ -62,6 +62,7 @@ public class SinglyLinkedList<T> {
                 size--;
                 return true;
             }
+            current = current.next;
         }
         return false;
     }
@@ -79,10 +80,11 @@ public class SinglyLinkedList<T> {
     }
 
     public T get(int index) {
-        if (head == null || index < 0 || index >= size()) return null;
-        for (Node current = head; index >= 0; index--) {
-            if (index == 0) return current.data;
-            current = current.next;
+        if (head != null && index < size()) {
+            for (Node current = head; index >= 0; index--) {
+                if (index == 0) return current.data;
+                current = current.next;
+            }
         }
         return null;
     }

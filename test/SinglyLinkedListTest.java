@@ -35,7 +35,20 @@ public class SinglyLinkedListTest {
     }
 
     @Test
+    void delete() {
+        assertEquals(false, list.delete(1));
+        list.insert(1);
+        list.append(2);
+        list.append(3);
+        assertEquals(false, list.delete(4));
+        assertEquals(true, list.delete(2));
+        assertEquals(true, list.delete(1));
+        assertEquals(1, list.size());
+    }
+
+    @Test
     void get() {
+        assertEquals(null, list.get(0));
         list.insert(1);
         assertEquals(1, list.get(0));
         assertEquals(null, list.get(-1));
