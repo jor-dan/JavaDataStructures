@@ -53,14 +53,14 @@ public class SinglyLinkedList<T> {
     public boolean delete(T data) {
         if (data == null) throw new IllegalArgumentException();
         if (head == null) return false;
-        if (data == head.data) {
+        if (data.equals(head.data)) {
             head = head.next;
             size--;
             return true;
         }
         Node current = head;
         while (current.next != null) {
-            if (data == current.next.data) {
+            if (data.equals(current.next.data)) {
                 current.next = current.next.next;
                 size--;
                 return true;
