@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Singly Linked List")
 public class SinglyLinkedListTest {
@@ -14,45 +14,60 @@ public class SinglyLinkedListTest {
 
     @Test
     void empty() {
-        assertEquals(true, list.isEmpty());
+        assertTrue(list.isEmpty());
         assertEquals(0, list.size());
     }
 
     @Test
     void insert() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            list.insert(null);
+        });
         list.insert(1);
         assertEquals(1, list.size());
-        assertEquals(false, list.isEmpty());
+        assertFalse(list.isEmpty());
         list.insert(2);
         assertEquals(2, list.size());
     }
 
     @Test
     void append() {
-        list.insert(2);
+        assertThrows(IllegalArgumentException.class, () -> {
+           list.append(null);
+        });
         list.append(1);
-        assertEquals(1, list.get(list.size() - 1));
+        list.append(2);
+        assertEquals(2, list.get(list.size() - 1));
     }
 
     @Test
     void delete() {
-        assertEquals(false, list.delete(1));
+        assertThrows(IllegalArgumentException.class, () -> {
+            list.delete(null);
+         });
+        assertFalse(list.delete(1));
         list.insert(1);
         list.append(2);
         list.append(3);
-        assertEquals(false, list.delete(4));
-        assertEquals(true, list.delete(2));
-        assertEquals(true, list.delete(1));
+        assertFalse(list.delete(4));
+        assertTrue(list.delete(2));
+        assertTrue(list.delete(1));
         assertEquals(1, list.size());
     }
 
     @Test
     void get() {
-        assertEquals(null, list.get(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.get(0);
+        });
         list.insert(1);
         assertEquals(1, list.get(0));
-        assertEquals(null, list.get(-1));
-        assertEquals(null, list.get(list.size()));
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.get(-1);
+        });
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.get(list.size());
+        });
     }
 
     @Test

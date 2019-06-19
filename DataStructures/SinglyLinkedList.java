@@ -26,16 +26,18 @@ public class SinglyLinkedList<T> {
         return size;
     }
 
-    public Boolean isEmpty() {
+    public boolean isEmpty() {
         return head == null;
     }
 
     public void insert(T data) {
+        if (data == null) throw new IllegalArgumentException();
         head = new Node(data, head);
         size++;
     }
 
     public void append(T data) {
+        if (data == null) throw new IllegalArgumentException();
         size++;
         if (head == null) {
             head = new Node(data);
@@ -48,7 +50,8 @@ public class SinglyLinkedList<T> {
         current.next = new Node(data);
     }
 
-    public Boolean delete(T data) {
+    public boolean delete(T data) {
+        if (data == null) throw new IllegalArgumentException();
         if (head == null) return false;
         if (data == head.data) {
             head = head.next;
@@ -86,6 +89,6 @@ public class SinglyLinkedList<T> {
                 current = current.next;
             }
         }
-        return null;
+        throw new IndexOutOfBoundsException();
     }
 }
