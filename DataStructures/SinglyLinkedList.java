@@ -2,24 +2,24 @@
  * Implementation of a Singly Linked List
  * <p>
  * Linked lists are similar to arrays, but aren't fixed in size.
- * A linked list expands and shrinks as nodes are dynamically added and removed.
+ * Linked lists expand and shrink as nodes are dynamically added and removed.
  * In a singly linked list, each node points to the next node in the list.
  * @author Jordan Owens
  * @param <T> the type of elements in the linked list
  */
 public class SinglyLinkedList<T> {
     /** Implementation of the nodes that make up the linked list */
-    private class Node {
+    private static class Node<T> {
         /** Element the node stores */
         T data;
         /** Pointer to the next node in the list */
-        Node next;
+        Node<T> next;
 
         /**
          * Constructs a node storing an element
          * @param data the element to be stored in the node
          */
-        public Node(T data) {
+        Node(T data) {
             this.data = data;
             this.next = null;
         }
@@ -29,14 +29,14 @@ public class SinglyLinkedList<T> {
          * @param data the element to be stored in the node
          * @param next the next node in the list to point to
          */
-        public Node(T data, Node next) {
+        Node(T data, Node<T> next) {
             this.data = data;
             this.next = next;
         }
     }
 
     /** Head of the list */
-    private Node head;
+    private Node<T> head;
     /** Size of the list */
     private int size;
 
@@ -69,7 +69,7 @@ public class SinglyLinkedList<T> {
      */
     public void insert(T data) {
         if (data == null) throw new IllegalArgumentException();
-        head = new Node(data, head);
+        head = new Node<>(data, head);
         size++;
     }
 
@@ -82,14 +82,14 @@ public class SinglyLinkedList<T> {
         if (data == null) throw new IllegalArgumentException();
         size++;
         if (head == null) {
-            head = new Node(data);
+            head = new Node<>(data);
             return;
         }
-        Node current = head;
+        Node<T> current = head;
         while (current.next != null) {
             current = current.next;
         }
-        current.next = new Node(data);
+        current.next = new Node<>(data);
     }
 
     /**
@@ -106,14 +106,12 @@ public class SinglyLinkedList<T> {
             size--;
             return true;
         }
-        Node current = head;
-        while (current.next != null) {
-            if (data.equals(current.next.data)) {
-                current.next = current.next.next;
+        for (Node<T> curr = head; curr.next != null; curr = curr.next) {
+            if (data.equals(curr.next.data)) {
+                curr.next = curr.next.next;
                 size--;
                 return true;
             }
-            current = current.next;
         }
         return false;
     }
@@ -122,10 +120,10 @@ public class SinglyLinkedList<T> {
      * Reverses the order of the list
      */
     public void reverse() {
-        Node current = head;
-        Node previous = null;
+        Node<T> current = head;
+        Node<T> previous = null;
         while (current != null) {
-            Node next = current.next;
+            Node<T> next = current.next;
             current.next = previous;
             previous = current;
             current = next;
@@ -141,7 +139,7 @@ public class SinglyLinkedList<T> {
      */
     public T get(int index) {
         if (head != null && index < size()) {
-            for (Node current = head; index >= 0; index--) {
+            for (Node<T> current = head; index >= 0; index--) {
                 if (index == 0) return current.data;
                 current = current.next;
             }
