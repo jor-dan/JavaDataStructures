@@ -144,4 +144,21 @@ public class DoublyLinkedList<T> {
         }
         throw new IndexOutOfBoundsException();
     }
+
+    /**
+     * Finds the index the element first appears at in the list
+     * @param data element being searched for in the list
+     * @return the index the element appears at in the list
+     *         or -1 if the element is not in the list
+     * @throws IllegalArgumentException if data is null
+     */
+    public int indexOf(T data) {
+        if (data == null) throw new IllegalArgumentException();
+        Node<T> current = head;
+        for (int i = 0; current != null; i++) {
+            if (data.equals(current.data)) return i;
+            current = current.next;
+        }
+        return -1;
+    }
 }

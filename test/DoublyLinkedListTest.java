@@ -76,4 +76,15 @@ public class DoublyLinkedListTest {
             assertEquals(elements[i], list.get(list.size() - i - 1));
         }
     }
+
+    @Test
+    void indexOf() {
+        assertThrows(IllegalArgumentException.class, () -> {
+           list.indexOf(null);
+        });
+        assertEquals(-1, list.indexOf(0));
+        list.insert(0);
+        list.insert(1);
+        assertEquals(1, list.indexOf(1));
+    }
 }

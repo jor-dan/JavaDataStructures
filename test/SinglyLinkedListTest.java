@@ -81,4 +81,15 @@ public class SinglyLinkedListTest {
             assertEquals(elements[i], list.get(list.size() - i - 1));
         }
     }
+
+    @Test
+    void indexOf() {
+        assertThrows(IllegalArgumentException.class, () -> {
+           list.indexOf(null);
+        });
+        assertEquals(-1, list.indexOf(0));
+        list.append(0);
+        list.append(1);
+        assertEquals(1, list.indexOf(1));
+    }
 }
