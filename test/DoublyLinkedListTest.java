@@ -13,6 +13,25 @@ public class DoublyLinkedListTest {
     }
 
     @Test
+    @DisplayName("Instantiate with array of elements")
+    void instatiateWithArray() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new DoublyLinkedList<>(null);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            String[] containsNull = {"1", null};
+            new DoublyLinkedList<>(containsNull);
+        });
+        String[] arr = {"1", "2", "3"};
+        DoublyLinkedList<String> arrList = new DoublyLinkedList<>(arr);
+        assertFalse(arrList.isEmpty());
+        assertEquals(3, arrList.size());
+        assertEquals("1", arrList.get(0));
+        assertEquals("2", arrList.get(1));
+        assertEquals("3", arrList.get(2));
+    }
+
+    @Test
     void empty() {
         assertTrue(list.isEmpty());
         assertEquals(0, list.size());
@@ -91,7 +110,7 @@ public class DoublyLinkedListTest {
     @Test
     void indexOf() {
         assertThrows(IllegalArgumentException.class, () -> {
-           list.indexOf(null);
+            list.indexOf(null);
         });
         assertEquals(-1, list.indexOf(0));
         list.insert(0);

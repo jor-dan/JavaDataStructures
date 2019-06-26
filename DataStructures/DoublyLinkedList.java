@@ -46,6 +46,20 @@ public class DoublyLinkedList<T> {
     }
 
     /**
+     * Constructs a doubly linked list from array elements
+     * @param array array to copy elements from
+     * @throws IllegalArgumentException if array or its elements are null
+     */
+    public DoublyLinkedList(T[] array) {
+        if (array == null) throw new IllegalArgumentException();
+        this.head = null;
+        this.size = 0;
+        for (T element : array) {
+            insert(element);
+        }
+    }
+
+    /**
      * Gets the size of the linked list
      * @return the number of elements in the list
      */

@@ -13,6 +13,25 @@ public class SinglyLinkedListTest {
     }
 
     @Test
+    @DisplayName("Instantiate with array of elements")
+    void instatiateWithArray() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SinglyLinkedList<>(null);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            String[] containsNull = {"1", null};
+            new SinglyLinkedList<>(containsNull);
+        });
+        String[] arr = {"1", "2", "3"};
+        SinglyLinkedList<String> arrList = new SinglyLinkedList<>(arr);
+        assertFalse(arrList.isEmpty());
+        assertEquals(3, arrList.size());
+        assertEquals("1", arrList.get(0));
+        assertEquals("2", arrList.get(1));
+        assertEquals("3", arrList.get(2));
+    }
+
+    @Test
     void empty() {
         assertTrue(list.isEmpty());
         assertEquals(0, list.size());
