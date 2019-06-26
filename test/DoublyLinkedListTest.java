@@ -78,6 +78,17 @@ public class DoublyLinkedListTest {
     }
 
     @Test
+    void contains() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            list.contains(null);
+        });
+        assertFalse(list.contains(0));
+        list.insert(0);
+        list.insert(1);
+        assertTrue(list.contains(1));
+    }
+
+    @Test
     void indexOf() {
         assertThrows(IllegalArgumentException.class, () -> {
            list.indexOf(null);

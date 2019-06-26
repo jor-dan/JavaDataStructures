@@ -148,6 +148,16 @@ public class SinglyLinkedList<T> {
     }
 
     /**
+     * Returns if an element is in the list
+     * @param data element being searched for in the list
+     * @return {@code true} if the element is in the list
+     * @throws IllegalArgumentException if data is null
+     */
+    public boolean contains(T data) {
+        return indexOf(data) >= 0;
+    }
+
+    /**
      * Finds the index the element first appears at in the list
      * @param data element being searched for in the list
      * @return the index the element appears at in the list

@@ -83,6 +83,17 @@ public class SinglyLinkedListTest {
     }
 
     @Test
+    void contains() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            list.contains(null);
+        });
+        assertFalse(list.contains(0));
+        list.append(0);
+        list.append(1);
+        assertTrue(list.contains(1));
+    }
+
+    @Test
     void indexOf() {
         assertThrows(IllegalArgumentException.class, () -> {
            list.indexOf(null);
