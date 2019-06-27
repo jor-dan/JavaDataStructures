@@ -4,6 +4,7 @@
  * Linked lists are similar to arrays, but aren't fixed in size.
  * Linked lists expand and shrink as nodes are dynamically added and removed.
  * In a singly linked list, each node points to the next node in the list.
+ *
  * @author Jordan Owens
  * @param <T> the type of elements in the linked list
  */
@@ -17,6 +18,7 @@ public class SinglyLinkedList<T> {
 
         /**
          * Constructs a node storing an element
+         *
          * @param data the element to be stored in the node
          */
         Node(T data) {
@@ -26,6 +28,7 @@ public class SinglyLinkedList<T> {
 
         /**
          * Constructs a node storing an element and pointing to another node
+         *
          * @param data the element to be stored in the node
          * @param next the next node in the list to point to
          */
@@ -48,6 +51,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Constructs a singly linked list from array elements
+     *
      * @param array array to copy elements from
      * @throws IllegalArgumentException if array or its elements are null
      */
@@ -55,13 +59,14 @@ public class SinglyLinkedList<T> {
         if (array == null) throw new IllegalArgumentException();
         this.head = null;
         this.size = 0;
-        for (T element: array) {
+        for (T element : array) {
             append(element);
         }
     }
 
     /**
      * Gets the size of the linked list
+     *
      * @return the number of elements in the list
      */
     public int size() {
@@ -70,6 +75,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Returns whether the list is empty or not
+     *
      * @return {@code true} if the list is empty
      */
     public boolean isEmpty() {
@@ -78,6 +84,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Inserts an element at the front of the list
+     *
      * @param data the data being inserted
      * @throws IllegalArgumentException if data is null
      */
@@ -89,6 +96,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Inserts an element at the back of the list
+     *
      * @param data the data being inserted
      * @throws IllegalArgumentException if data is null
      */
@@ -108,6 +116,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Removes an element from the list
+     *
      * @param data the data being removed
      * @return {@code true} if the deletion was successful
      * @throws IllegalArgumentException if data is null
@@ -147,6 +156,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Gets the element at a specific position in the list
+     *
      * @param index the index of the element to return
      * @return the element at the specified index
      * @throws IndexOutOfBoundsException if index < 0 or index >= size()
@@ -163,6 +173,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Returns if an element is in the list
+     *
      * @param data element being searched for in the list
      * @return {@code true} if the element is in the list
      * @throws IllegalArgumentException if data is null
@@ -173,6 +184,7 @@ public class SinglyLinkedList<T> {
 
     /**
      * Finds the index the element first appears at in the list
+     *
      * @param data element being searched for in the list
      * @return the index the element appears at in the list
      *         or -1 if the element is not in the list
