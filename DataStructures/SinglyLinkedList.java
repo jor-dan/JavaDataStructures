@@ -59,8 +59,17 @@ public class SinglyLinkedList<T> {
         if (array == null) throw new IllegalArgumentException();
         this.head = null;
         this.size = 0;
+        Node<T> prev = head;
         for (T element : array) {
-            append(element);
+            if (element == null) throw new IllegalArgumentException();
+            if (head == null) {
+                head = new Node<>(element);
+                prev = head;
+            } else {
+                prev.next = new Node<>(element);
+                prev = prev.next;
+            }
+            size++;
         }
     }
 
