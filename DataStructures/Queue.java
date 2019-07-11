@@ -142,6 +142,16 @@ public class Queue<T> {
      * Gets element at the front of the queue
      * 
      * @return element at the front of the queue
+     *         or {@code null} if queue is empty
+     */
+    public T front() {
+        return front != null ? front.element : null;
+    }
+
+    /**
+     * Gets element at the front of the queue
+     * 
+     * @return element at the front of the queue
      * @throws NoSuchElementException if the queue is empty
      */
     public T element() {

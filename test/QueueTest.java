@@ -98,9 +98,13 @@ public class QueueTest {
     }
 
     @Test
+    @DisplayName("front/peek")
     void peek() {
+        assertNull(queue.front());
         assertNull(queue.peek());
         queue.enqueue(1);
+        assertEquals(1, queue.size());
+        assertEquals(1, queue.front());
         assertEquals(1, queue.size());
         assertEquals(1, queue.peek());
         assertEquals(1, queue.size());
