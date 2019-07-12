@@ -13,9 +13,15 @@ public class StackTest {
     }
 
     @Test
-    void empty() {
+    @DisplayName("is proper size after instantiation")
+    void postInstantiation() {
+        // Starts off empty
         assertTrue(stack.isEmpty());
         assertEquals(0, stack.size());
+        // Is not full
+        assertFalse(stack.isFull());
+        // Is not size restricted
+        assertEquals(Integer.MAX_VALUE, stack.maxSize());
     }
 
     @Test
@@ -59,5 +65,34 @@ public class StackTest {
         stack.pop();
         assertNull(stack.top());
         assertTrue(stack.isEmpty());
+    }
+
+    @Test
+    @DisplayName("handles instantiation with a size limit")
+    void instantiateStacksWithSizeLimits() {
+        assertThrows(IllegalArgumentException.class, () -> {
+           stack = new Stack<>(-1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            stack = new Stack<>(0);
+        });
+        assertDoesNotThrow(() -> {
+            stack = new Stack<>(1);
+        });
+    }
+
+    @Test
+    @DisplayName("handles size constraints")
+    void sizeConstraintOperations() {
+        stack = new Stack<>(1);
+        assertEquals(1, stack.maxSize());
+        assertFalse(stack.isFull());
+        assertTrue(stack.push(1));
+        assertTrue(stack.isFull());
+        assertFalse(stack.push(2));
+        // Throws NullPointerException even if stack if full
+        assertThrows(NullPointerException.class, () -> {
+            stack.push(null);
+        });
     }
 }

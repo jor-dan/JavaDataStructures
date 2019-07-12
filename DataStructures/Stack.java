@@ -34,11 +34,23 @@ public class Stack<T> {
     private Node<T> top;
     /** Size of the stack */
     private int size;
+    /** Maximum size of the stack */
+    private int maxSize;
 
     /** Constructs an empty stack */
     public Stack() {
         this.top = null;
         this.size = 0;
+        this.maxSize = Integer.MAX_VALUE;
+    }
+
+    public Stack(int maxSize) {
+        if (maxSize < 1) {
+            throw new IllegalArgumentException("Maximum size must be >= 1");
+        }
+        this.top = null;
+        this.size = 0;
+        this.maxSize = maxSize;
     }
 
     /**
@@ -51,6 +63,15 @@ public class Stack<T> {
     }
 
     /**
+     * Gets the maximum size of the stack
+     * 
+     * @return the maximum number of elements allowed in the stack
+     */
+    public int maxSize() {
+        return maxSize;
+    }
+
+    /**
      * Returns whether the stack is empty or not
      * 
      * @return {@code true} if the stack is empty
@@ -60,15 +81,28 @@ public class Stack<T> {
     }
 
     /**
+     * Returns whether the stack is full or not
+     * 
+     * @return {@code true} if the stack is full
+     */
+    public boolean isFull() {
+        return size == maxSize;
+    }
+
+    /**
      * Pushes an element on to the stack
      *
      * @param element the element to push on to the stack
+     * @return {@code true} if the element was added succesfully
+     *         {@code false} if the stack is full and the element can't be added
      * @throws NullPointerException if the element is null
      */
-    public void push(T element) {
+    public boolean push(T element) {
         if (element == null) throw new NullPointerException();
+        if (isFull()) return false;
         top = new Node<>(element, top);
         size++;
+        return true;
     }
 
     /**
