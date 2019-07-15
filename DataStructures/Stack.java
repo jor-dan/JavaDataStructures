@@ -44,6 +44,12 @@ public class Stack<T> {
         this.maxSize = Integer.MAX_VALUE;
     }
 
+    /**
+     * Construcuts an empty stack
+     *
+     * @param maxSize the maximum size of the stack
+     * @throws IllegalArgumentException if maxSize is not at least 1
+     */
     public Stack(int maxSize) {
         if (maxSize < 1) {
             throw new IllegalArgumentException("Maximum size must be >= 1");
