@@ -15,9 +15,15 @@ public class QueueTest {
     }
 
     @Test
-    void empty() {
+    @DisplayName("is proper size after instantiation")
+    void postInstantiation() {
+        // Starts off empty
         assertTrue(queue.isEmpty());
         assertEquals(0, queue.size());
+        // Is not full
+        assertFalse(queue.isFull());
+        // Is not size restricted
+        assertEquals(Integer.MAX_VALUE, queue.maxSize());
     }
 
     @Test
@@ -108,5 +114,34 @@ public class QueueTest {
         assertEquals(1, queue.size());
         assertEquals(1, queue.peek());
         assertEquals(1, queue.size());
+    }
+
+    @Test
+    @DisplayName("handles instantiation with a size limit")
+    void instantiateWithSizeLimits() {
+        assertThrows(IllegalArgumentException.class, () -> {
+           queue = new Queue<>(-1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            queue = new Queue<>(0);
+        });
+        assertDoesNotThrow(() -> {
+            queue = new Queue<>(1);
+        });
+    }
+
+    @Test
+    @DisplayName("handles size constraints")
+    void sizeConstraintOperations() {
+        queue = new Queue<>(1);
+        assertEquals(1, queue.maxSize());
+        assertFalse(queue.isFull());
+        assertTrue(queue.enqueue(1));
+        assertTrue(queue.isFull());
+        assertFalse(queue.enqueue(2));
+        // Throws NullPointerException even if queue is full
+        assertThrows(NullPointerException.class, () -> {
+            queue.enqueue(null);
+        });
     }
 }
