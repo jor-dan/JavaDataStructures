@@ -45,7 +45,7 @@ public class Stack<T> {
     }
 
     /**
-     * Construcuts an empty stack
+     * Constructs an empty stack
      *
      * @param maxSize the maximum size of the stack
      * @throws IllegalArgumentException if maxSize is not at least 1
@@ -61,7 +61,7 @@ public class Stack<T> {
 
     /**
      * Gets the size of the stack
-     * 
+     *
      * @return the number of elements in the stack
      */
     public int size() {
@@ -70,7 +70,7 @@ public class Stack<T> {
 
     /**
      * Gets the maximum size of the stack
-     * 
+     *
      * @return the maximum number of elements allowed in the stack
      */
     public int maxSize() {
@@ -79,7 +79,7 @@ public class Stack<T> {
 
     /**
      * Returns whether the stack is empty or not
-     * 
+     *
      * @return {@code true} if the stack is empty
      */
     public boolean isEmpty() {
@@ -88,7 +88,7 @@ public class Stack<T> {
 
     /**
      * Returns whether the stack is full or not
-     * 
+     *
      * @return {@code true} if the stack is full
      */
     public boolean isFull() {
@@ -113,7 +113,7 @@ public class Stack<T> {
 
     /**
      * Removes the element on top of the stack
-     * 
+     *
      * @return the element on top of the stack
      *         or {@code null} if the stack is empty
      */
@@ -127,7 +127,7 @@ public class Stack<T> {
 
     /**
      * Gets the element on top of the stack
-     * 
+     *
      * @return the element on top of the stack
      *         or {@code null} if the stack is empty
      */

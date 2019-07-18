@@ -46,7 +46,7 @@ public class Deque<T> {
 
     /**
      * Gets the size of the deque
-     * 
+     *
      * @return the number of elements in the qudequeeue
      */
     public int size() {
@@ -55,7 +55,7 @@ public class Deque<T> {
 
     /**
      * Returns whether the deque is empty or not
-     * 
+     *
      * @return {@code true} if the deque is empty
      */
     public boolean isEmpty() {
@@ -64,7 +64,7 @@ public class Deque<T> {
 
     /**
      * Inserts an element at the front of the deque
-     * 
+     *
      * @param element the element to insert
      * @return {@code true} if the element was added to the deque
      * @throws NullPointerException if the element is null
@@ -83,7 +83,7 @@ public class Deque<T> {
 
     /**
      * Inserts an element at the back of the deque
-     * 
+     *
      * @param element the element to insert
      * @return {@code true} if the element was added to the deque
      * @throws NullPointerException if the element is null
@@ -102,7 +102,7 @@ public class Deque<T> {
 
     /**
      * Inserts an element at the front of the deque
-     * 
+     *
      * @param element the element to insert
      * @throws NullPointerException if the element is null
      */
@@ -112,7 +112,7 @@ public class Deque<T> {
 
     /**
      * Inserts an element at the back of the deque
-     * 
+     *
      * @param element the element to insert
      * @throws NullPointerException if the element is null
      */
@@ -122,7 +122,7 @@ public class Deque<T> {
 
     /**
      * Inserts an element at the front of the deque
-     * 
+     *
      * @param element the element to insert
      * @return {@code true} if the element was added to the deque
      * @throws NullPointerException if the element is null
@@ -133,7 +133,7 @@ public class Deque<T> {
 
     /**
      * Inserts an element at the back of the deque
-     * 
+     *
      * @param element the element to insert
      * @return {@code true} if the element was added to the deque
      * @throws NullPointerException if the element is null
@@ -144,7 +144,7 @@ public class Deque<T> {
 
     /**
      * Gets and removes the first element in the deque
-     * 
+     *
      * @return element at the front of the deque
      *         or {@code null} if deque is empty
      */
@@ -158,7 +158,7 @@ public class Deque<T> {
 
     /**
      * Gets and removes the last element in the deque
-     * 
+     *
      * @return element at the back of the deque
      *         or {@code null} if deque is empty
      */
@@ -172,7 +172,7 @@ public class Deque<T> {
 
     /**
      * Gets and removes the first element in the deque
-     * 
+     *
      * @return element at the front of the deque
      * @throws NoSuchElementException if deque is empty
      */
@@ -184,7 +184,7 @@ public class Deque<T> {
 
     /**
      * Gets and removes the first element in the deque
-     * 
+     *
      * @return element at the front of the deque
      * @throws NoSuchElementException if deque is empty
      */
@@ -196,7 +196,7 @@ public class Deque<T> {
 
     /**
      * Gets and removes the first element in the deque
-     * 
+     *
      * @return element at the front of the deque
      *         or {@code null} if deque is empty
      */
@@ -206,7 +206,7 @@ public class Deque<T> {
 
     /**
      * Gets and removes the last element in the deque
-     * 
+     *
      * @return element at the back of the deque
      *         or {@code null} if deque is empty
      */
@@ -216,7 +216,7 @@ public class Deque<T> {
 
     /**
      * Gets, but does not remove, the first element in the deque
-     * 
+     *
      * @return element at the front of the deque
      *         or {@code null} if deque is empty
      */
@@ -226,7 +226,7 @@ public class Deque<T> {
 
     /**
      * Gets, but does not remove, the last element in the deque
-     * 
+     *
      * @return element at the front of the deque
      *         or {@code null} if deque is empty
      */
@@ -236,7 +236,7 @@ public class Deque<T> {
 
     /**
      * Gets, but does not remove, the first element in the deque
-     * 
+     *
      * @return element at the front of the deque
      * @throws NoSuchElementException if deque is empty
      */
@@ -247,7 +247,7 @@ public class Deque<T> {
 
     /**
      * Gets, but does not remove, the last element in the deque
-     * 
+     *
      * @return element at the front of the deque
      * @throws NoSuchElementException if deque is empty
      */
@@ -258,7 +258,7 @@ public class Deque<T> {
 
     /**
      * Gets, but does not remove, the first element in the deque
-     * 
+     *
      * @return element at the front of the deque
      *         or {@code null} if deque is empty
      */
@@ -268,7 +268,7 @@ public class Deque<T> {
 
     /**
      * Gets, but does not remove, the last element in the deque
-     * 
+     *
      * @return element at the front of the deque
      *         or {@code null} if deque is empty
      */
@@ -278,7 +278,7 @@ public class Deque<T> {
 
     /**
      * Returns whether the deque contains an element
-     * 
+     *
      * @param o element being tested for inclusion in the deque
      * @return {@code true} if the element is in the deque
      * @throws NullPointerException if the element is null

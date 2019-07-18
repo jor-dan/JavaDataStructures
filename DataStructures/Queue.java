@@ -61,7 +61,7 @@ public class Queue<T> {
 
     /**
      * Gets the size of the queue
-     * 
+     *
      * @return the number of elements in the queue
      */
     public int size() {
@@ -79,7 +79,7 @@ public class Queue<T> {
 
     /**
      * Returns whether the queue is empty or not
-     * 
+     *
      * @return {@code true} if the queue is empty
      */
     public boolean isEmpty() {
@@ -141,7 +141,7 @@ public class Queue<T> {
 
     /**
      * Gets and removes the front of the queue
-     * 
+     *
      * @return element at the front of the queue
      *         or {@code null} if queue is empty
      */
@@ -155,7 +155,7 @@ public class Queue<T> {
 
     /**
      * Gets and removes the front of the queue
-     * 
+     *
      * @return element at the front of the queue
      * @throws NoSuchElementException if queue is empty
      */
@@ -167,7 +167,7 @@ public class Queue<T> {
 
     /**
      * Gets and removes the front of the queue
-     * 
+     *
      * @return element at the front of the queue
      *         or {@code null} if queue is empty
      */
@@ -177,7 +177,7 @@ public class Queue<T> {
 
     /**
      * Gets element at the front of the queue
-     * 
+     *
      * @return element at the front of the queue
      *         or {@code null} if queue is empty
      */
@@ -187,7 +187,7 @@ public class Queue<T> {
 
     /**
      * Gets element at the front of the queue
-     * 
+     *
      * @return element at the front of the queue
      * @throws NoSuchElementException if the queue is empty
      */
@@ -198,7 +198,7 @@ public class Queue<T> {
 
     /**
      * Gets element at the front of the queue
-     * 
+     *
      * @return element at the front of the queue
      *         or {@code null} if queue is empty
      */

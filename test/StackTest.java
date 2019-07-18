@@ -90,7 +90,7 @@ public class StackTest {
         assertTrue(stack.push(1));
         assertTrue(stack.isFull());
         assertFalse(stack.push(2));
-        // Throws NullPointerException even if stack if full
+        // Throws NullPointerException even if stack is full
         assertThrows(NullPointerException.class, () -> {
             stack.push(null);
         });
