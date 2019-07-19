@@ -28,13 +28,17 @@ public class DequeTest {
         assertThrows(NullPointerException.class, () -> {
             deque.enqueueBack(null);
         });
+        assertThrows(NullPointerException.class, () -> {
+            deque.enqueue(null);
+        });
         assertEquals(0, deque.size());
-        deque.enqueueFront(1);
+        assertTrue(deque.enqueueFront(1));
         assertEquals(1, deque.size());
         assertFalse(deque.isEmpty());
-        deque.enqueueFront(2);
-        deque.enqueueBack(3);
-        assertEquals(3, deque.size());
+        assertTrue(deque.enqueueBack(2));
+        assertTrue(deque.enqueue(3));
+        assertTrue(deque.enqueueFront(4));
+        assertEquals(4, deque.size());
     }
 
     @Test
@@ -45,10 +49,15 @@ public class DequeTest {
         assertThrows(NullPointerException.class, () -> {
             deque.addLast(null);
         });
+        assertThrows(NullPointerException.class, () -> {
+            deque.add(null);
+        });
         deque.addFirst(5);
         assertEquals(1, deque.size());
         deque.addLast(5);
         assertEquals(2, deque.size());
+        assertTrue(deque.add(5));
+        assertEquals(3, deque.size());
     }
 
     @Test
@@ -59,10 +68,15 @@ public class DequeTest {
         assertThrows(NullPointerException.class, () -> {
             deque.offerLast(null);
         });
+        assertThrows(NullPointerException.class, () -> {
+            deque.offer(null);
+        });
         assertTrue(deque.offerFirst(5));
         assertEquals(1, deque.size());
         assertTrue(deque.offerLast(5));
         assertEquals(2, deque.size());
+        assertTrue(deque.offer(5));
+        assertEquals(3, deque.size());
     }
 
     @Test
@@ -73,8 +87,8 @@ public class DequeTest {
         deque.enqueueBack(2);
         assertEquals(2, deque.size());
         assertFalse(deque.isEmpty());
+        assertEquals(2, deque.dequeueBack());
         assertEquals(1, deque.dequeueFront());
-        assertEquals(2, deque.dequeueFront());
         assertEquals(0, deque.size());
         assertTrue(deque.isEmpty());
     }
@@ -87,32 +101,48 @@ public class DequeTest {
         assertThrows(NoSuchElementException.class, () -> {
             deque.removeLast();
         });
-        deque.enqueueFront(5);
+        assertThrows(NoSuchElementException.class, () -> {
+            deque.remove();
+        });
+        for (int i = 0; i < 4; i++) deque.enqueueBack(i);
+        assertEquals(4, deque.size());
+        assertEquals(0, deque.remove());
+        assertEquals(1, deque.removeFirst());
+        assertEquals(3, deque.removeLast());
         assertEquals(1, deque.size());
-        assertEquals(5, deque.removeFirst());
-        deque.enqueueFront(10);
-        assertEquals(10, deque.removeLast());
-        assertEquals(0, deque.size());
-        assertTrue(deque.isEmpty());
+        assertFalse(deque.isEmpty());
     }
 
     @Test
     void poll() {
+        assertNull(deque.poll());
         assertNull(deque.pollFirst());
         assertNull(deque.pollLast());
-        deque.enqueueFront(5);
+        for (int i = 0; i < 4; i++) deque.enqueueBack(i);
+        assertEquals(4, deque.size());
+        assertEquals(0, deque.poll());
+        assertEquals(1, deque.pollFirst());
+        assertEquals(3, deque.pollLast());
         assertEquals(1, deque.size());
-        assertEquals(5, deque.pollFirst());
-        deque.enqueueFront(5);
-        assertEquals(5, deque.pollLast());
-        assertEquals(0, deque.size());
-        assertTrue(deque.isEmpty());
+        assertFalse(deque.isEmpty());
+    }
+
+    @Test
+    void element() {
+        assertThrows(NoSuchElementException.class, () -> {
+            deque.element();
+        });
+        deque.add(5);
+        assertEquals(1, deque.size());
+        assertEquals(5, deque.element());
+        assertEquals(1, deque.size());
     }
 
     @Test
     @DisplayName("gets front element without removal")
     void front() {
         assertNull(deque.front());
+        assertNull(deque.peek());
         assertNull(deque.peekFirst());
         assertThrows(NoSuchElementException.class, () -> {
             deque.getFirst();
@@ -122,6 +152,8 @@ public class DequeTest {
         assertEquals(1, deque.front());
         assertEquals(1, deque.size());
         assertEquals(1, deque.peekFirst());
+        assertEquals(1, deque.size());
+        assertEquals(1, deque.peek());
         assertEquals(1, deque.size());
         assertEquals(1, deque.getFirst());
         assertEquals(1, deque.size());

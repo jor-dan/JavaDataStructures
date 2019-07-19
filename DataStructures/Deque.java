@@ -183,9 +183,9 @@ public class Deque<T> {
     }
 
     /**
-     * Gets and removes the first element in the deque
+     * Gets and removes the last element in the deque
      *
-     * @return element at the front of the deque
+     * @return element at the back of the deque
      * @throws NoSuchElementException if deque is empty
      */
     public T removeLast() {
@@ -227,7 +227,7 @@ public class Deque<T> {
     /**
      * Gets, but does not remove, the last element in the deque
      *
-     * @return element at the front of the deque
+     * @return element at the back of the deque
      *         or {@code null} if deque is empty
      */
     public T back() {
@@ -237,7 +237,7 @@ public class Deque<T> {
     /**
      * Gets, but does not remove, the first element in the deque
      *
-     * @return element at the front of the deque
+     * @return element at the back of the deque
      * @throws NoSuchElementException if deque is empty
      */
     public T getFirst() {
@@ -248,7 +248,7 @@ public class Deque<T> {
     /**
      * Gets, but does not remove, the last element in the deque
      *
-     * @return element at the front of the deque
+     * @return element at the back of the deque
      * @throws NoSuchElementException if deque is empty
      */
     public T getLast() {
@@ -269,7 +269,7 @@ public class Deque<T> {
     /**
      * Gets, but does not remove, the last element in the deque
      *
-     * @return element at the front of the deque
+     * @return element at the back of the deque
      *         or {@code null} if deque is empty
      */
     public T peekLast() {
@@ -290,5 +290,89 @@ public class Deque<T> {
             if (o.equals(current.element)) return true;
         }
         return false;
+    }
+
+    // Queue methods
+
+    /**
+     * Inserts an element into the queue represented by this deque
+     * (at the back of this deque)
+     *
+     * @param element the element to insert
+     * @return {@code true} if the element was added to the deque
+     * @throws NullPointerException if the element is null
+     */
+    public boolean enqueue(T element) {
+        return enqueueBack(element);
+    }
+    /**
+     * Inserts an element into the queue represented by this deque
+     * (at the back of this deque)
+     *
+     * @param element the element to insert
+     * @return {@code true} if the element was added to the deque
+     * @throws NullPointerException if the element is null
+     */
+    public boolean add(T element) {
+        return enqueueBack(element);
+    }
+
+    /**
+     * Inserts an element into the queue represented by this deque
+     * (at the back of this deque)
+     *
+     * @param element the element to insert
+     * @return {@code true} if the element was added to the deque
+     * @throws NullPointerException if the element is null
+     */
+    public boolean offer(T element) {
+        return enqueueBack(element);
+    }
+
+    /**
+     * Gets and removes the first element in the queue represented by this deque
+     * (the first element in the deque)
+     *
+     * @return element at the front of the deque
+     * @throws NoSuchElementException if deque is empty
+     */
+    public T remove() {
+        T element = dequeueFront();
+        if (element == null) throw new NoSuchElementException();
+        return element;
+    }
+
+    /**
+     * Gets and removes the first element in the queue represented by this deque
+     * (the first element in the deque)
+     *
+     * @return element at the front of the deque
+     *         or {@code null} if deque is empty
+     */
+    public T poll() {
+        return dequeueFront();
+    }
+
+    /**
+     * Gets, but does not remove, the first element in queue
+     * represented by this deque (the first element in the deque)
+     *
+     * @return element at the front of the deque
+     * @throws NoSuchElementException if deque is empty
+     */
+    public T element() {
+        if (front == null) throw new NoSuchElementException();
+        return front.element;
+    }
+
+    /**
+     * Gets, but does not remove, the first element in queue
+     * represented by this deque (the first element in the deque)
+     *
+     * @return element at the front of the deque
+     *         or {@code null} if deque is empty
+     */
+    public T peek() {
+        return front != null ? front.element : null;
     }
 }
