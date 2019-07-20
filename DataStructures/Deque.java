@@ -375,4 +375,30 @@ public class Deque<T> {
     public T peek() {
         return front != null ? front.element : null;
     }
+
+    // Stack methods
+
+    /**
+     * Pushes an element on to the stack represented by this deque
+     * (inserts it at the front of the deque)
+     *
+     * @param element the element to push on to the stack
+     * @return {@code true} if the element was added succesfully
+     * @throws NullPointerException if the element is null
+     */
+    public boolean push(T element) {
+        return enqueueFront(element);
+    }
+
+    /**
+     * Removes the element on top of the stack represented by this deque
+     * (the first element in the deque)
+     *
+     * @return the element on top of the stack represented by this deque
+     *         (the element at the front of this deque)
+     *          or {@code null} if the deque is empty
+     */
+    public T pop() {
+        return dequeueFront();
+    }
 }

@@ -189,4 +189,17 @@ public class DequeTest {
         assertTrue(deque.contains(2));
         assertFalse(deque.contains(10));
     }
+
+    @Test
+    @DisplayName("supports stack methods")
+    void stack() {
+        assertNull(deque.pop());
+        for (int i = 0; i < 3; i++) {
+            assertTrue(deque.push(i));
+        }
+        assertEquals(2, deque.pop());
+        assertEquals(1, deque.pop());
+        assertEquals(0, deque.pop());
+        assertNull(deque.pop());
+    }
 }
