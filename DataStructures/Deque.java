@@ -3,7 +3,8 @@ import java.util.NoSuchElementException;
 /**
  * A deque, or double ended queue, is a data structure that allows
  * insertion and removal of elements at both the front and the back.
- * 
+ * As a result, a deque can be used as a queue or a stack.
+ *
  * @author Jordan Owens
  * @param <T> the type of elements in the deque
  */
