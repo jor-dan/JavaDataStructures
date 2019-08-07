@@ -202,4 +202,37 @@ public class DequeTest {
         assertEquals(0, deque.pop());
         assertNull(deque.pop());
     }
+
+    @Test
+    @DisplayName("handles instantiation with a size limit")
+    void instantiateWithSizeLimits() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            deque = new Deque<>(-1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            deque = new Deque<>(0);
+        });
+        assertDoesNotThrow(() -> {
+            deque = new Deque<>(1);
+        });
+    }
+
+    @Test
+    @DisplayName("handles size constraints")
+    void sizeConstraintOperations() {
+        deque = new Deque<>(1);
+        assertEquals(1, deque.maxSize());
+        assertFalse(deque.isFull());
+        assertTrue(deque.enqueueFront(1));
+        assertTrue(deque.isFull());
+        assertFalse(deque.enqueueFront(2));
+        assertFalse(deque.enqueueBack(2));
+        // Throws NullPointerException even if deque is full
+        assertThrows(NullPointerException.class, () -> {
+            deque.enqueueFront(null);
+        });
+        assertThrows(NullPointerException.class, () -> {
+            deque.enqueueBack(null);
+        });
+    }
 }

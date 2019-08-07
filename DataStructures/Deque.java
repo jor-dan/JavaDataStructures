@@ -38,20 +38,47 @@ public class Deque<T> {
     private Node<T> back;
     /** Size of the deque */
     private int size;
+    /** Maximum size of the deque */
+    private int maxSize;
 
     /** Constructs an empty deque */
     public Deque() {
         this.front = this.back = null;
         this.size = 0;
+        this.maxSize = Integer.MAX_VALUE;
+    }
+
+    /**
+     * Constructs an empty stack
+     *
+     * @param maxSize the maximum size of the deque
+     * @throws IllegalArgumentException if maxSize is not at least 1
+     */
+    public Deque(int maxSize) {
+        if (maxSize < 1) {
+            throw new IllegalArgumentException("Maximum size must be >= 1");
+        }
+        this.front = this.back = null;
+        this.size = 0;
+        this.maxSize = maxSize;
     }
 
     /**
      * Gets the size of the deque
      *
-     * @return the number of elements in the qudequeeue
+     * @return the number of elements in the deque
      */
     public int size() {
         return size;
+    }
+
+    /**
+     * Gets the maximum size of the deque
+     *
+     * @return the maximum number of elements allowed in the deque
+     */
+    public int maxSize() {
+        return maxSize;
     }
 
     /**
@@ -64,14 +91,25 @@ public class Deque<T> {
     }
 
     /**
+     * Returns whether the deque is full or not
+     *
+     * @return {@code true} if the deque is full
+     */
+    public boolean isFull() {
+        return size == maxSize;
+    }
+
+    /**
      * Inserts an element at the front of the deque
      *
      * @param element the element to insert
      * @return {@code true} if the element was added to the deque
+     *         {@code false} if the deque is full and the element can't be added
      * @throws NullPointerException if the element is null
      */
     public boolean enqueueFront(T element) {
         if (element == null) throw new NullPointerException();
+        if (isFull()) return false;
         front = new Node<>(element, null, front);
         if (front.next == null) {
             back = front;
@@ -87,10 +125,12 @@ public class Deque<T> {
      *
      * @param element the element to insert
      * @return {@code true} if the element was added to the deque
+     *         {@code false} if the deque is full and the element can't be added
      * @throws NullPointerException if the element is null
      */
     public boolean enqueueBack(T element) {
         if (element == null) throw new NullPointerException();
+        if (isFull()) return false;
         back = new Node<>(element, back, null);
         if (back.prev == null) {
             front = back;
