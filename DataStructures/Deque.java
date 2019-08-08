@@ -22,7 +22,7 @@ public class Deque<T> {
          * Constructs a node storing an element
          *
          * @param element the element to be stored in the node
-         * @param next the previous node in the deque to refer to
+         * @param prev the previous node in the deque to refer to
          * @param next the next node in the deque to refer to
          */
         Node(T element, Node<T> prev, Node<T> next) {
@@ -49,7 +49,7 @@ public class Deque<T> {
     }
 
     /**
-     * Constructs an empty stack
+     * Constructs an empty deque
      *
      * @param maxSize the maximum size of the deque
      * @throws IllegalArgumentException if maxSize is not at least 1
