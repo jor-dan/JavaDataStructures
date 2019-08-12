@@ -147,4 +147,34 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
         return false;
     }
+
+    /**
+     * Gets the smallest element in the tree
+     *
+     * @return the smallest element in the tree or
+     *         {@code null} if the tree is empty
+     */
+    public T min() {
+        if (root == null) return null;
+        Node<T> min = root;
+        while (min.left != null) {
+            min = min.left;
+        }
+        return min.element;
+    }
+
+    /**
+     * Gets the largest element in the tree
+     *
+     * @return the largest element in the tree or
+     *         {@code null} if the tree is empty
+     */
+    public T max() {
+        if (root == null) return null;
+        Node<T> max = root;
+        while (max.right != null) {
+            max = max.right;
+        }
+        return max.element;
+    }
 }
