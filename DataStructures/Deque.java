@@ -424,7 +424,7 @@ public class Deque<T> {
      * (inserts it at the front of the deque)
      *
      * @param element the element to push on to the stack
-     * @return {@code true} if the element was added succesfully
+     * @return {@code true} if the element was added successfully
      * @throws NullPointerException if the element is null
      */
     public boolean push(T element) {

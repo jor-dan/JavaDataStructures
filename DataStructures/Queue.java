@@ -99,7 +99,7 @@ public class Queue<T> {
      * Inserts an element into the queue
      *
      * @param element the element to add
-     * @return {@code true} if the element was added succesfully
+     * @return {@code true} if the element was added successfully
      *         {@code false} if the queue is full and the element can't be added
      * @throws NullPointerException if the element is null
      */

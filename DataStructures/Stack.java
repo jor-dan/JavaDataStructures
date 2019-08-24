@@ -99,7 +99,7 @@ public class Stack<T> {
      * Pushes an element on to the stack
      *
      * @param element the element to push on to the stack
-     * @return {@code true} if the element was added succesfully
+     * @return {@code true} if the element was added successfully
      *         {@code false} if the stack is full and the element can't be added
      * @throws NullPointerException if the element is null
      */
