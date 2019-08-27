@@ -37,7 +37,7 @@ public class Queue<T> {
     /** Maximum size of the queue */
     private int maxSize;
 
-    /** Constructs an empty queue */
+    /** Constructs an empty queue with no size restriction */
     public Queue() {
         this.front = this.back = null;
         this.size = 0;
@@ -45,7 +45,7 @@ public class Queue<T> {
     }
 
     /**
-     * Constructs an empty queue
+     * Constructs an empty queue with a size restriction
      *
      * @param maxSize the maximum size of the queue
      * @throws IllegalArgumentException if maxSize is not at least 1

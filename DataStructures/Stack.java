@@ -37,7 +37,7 @@ public class Stack<T> {
     /** Maximum size of the stack */
     private int maxSize;
 
-    /** Constructs an empty stack */
+    /** Constructs an empty stack with no size restriction */
     public Stack() {
         this.top = null;
         this.size = 0;
@@ -45,7 +45,7 @@ public class Stack<T> {
     }
 
     /**
-     * Constructs an empty stack
+     * Constructs an empty stack with a size restriction
      *
      * @param maxSize the maximum size of the stack
      * @throws IllegalArgumentException if maxSize is not at least 1

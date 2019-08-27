@@ -41,7 +41,7 @@ public class Deque<T> {
     /** Maximum size of the deque */
     private int maxSize;
 
-    /** Constructs an empty deque */
+    /** Constructs an empty deque with no size restriction */
     public Deque() {
         this.front = this.back = null;
         this.size = 0;
@@ -49,7 +49,7 @@ public class Deque<T> {
     }
 
     /**
-     * Constructs an empty deque
+     * Constructs an empty deque with a size restriction
      *
      * @param maxSize the maximum size of the deque
      * @throws IllegalArgumentException if maxSize is not at least 1
