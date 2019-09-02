@@ -1,29 +1,31 @@
+package LinkedLists;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Doubly Linked List")
-public class DoublyLinkedListTest {
-    DoublyLinkedList<Integer> list;
+@DisplayName("Singly Linked List")
+public class SinglyLinkedListTest {
+    SinglyLinkedList<Integer> list;
 
     @BeforeEach
     void instantiate() {
-        list = new DoublyLinkedList<>();
+        list = new SinglyLinkedList<>();
     }
 
     @Test
     @DisplayName("Instantiate with array of elements")
     void instatiateWithArray() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new DoublyLinkedList<>(null);
+            new SinglyLinkedList<>(null);
         });
         assertThrows(IllegalArgumentException.class, () -> {
             String[] containsNull = {"1", null};
-            new DoublyLinkedList<>(containsNull);
+            new SinglyLinkedList<>(containsNull);
         });
         String[] arr = {"1", "2", "3"};
-        DoublyLinkedList<String> arrList = new DoublyLinkedList<>(arr);
+        SinglyLinkedList<String> arrList = new SinglyLinkedList<>(arr);
         assertFalse(arrList.isEmpty());
         assertEquals(3, arrList.size());
         assertEquals("1", arrList.get(0));
@@ -50,19 +52,28 @@ public class DoublyLinkedListTest {
     }
 
     @Test
+    void append() {
+        assertThrows(IllegalArgumentException.class, () -> {
+           list.append(null);
+        });
+        list.append(1);
+        list.append(2);
+        assertEquals(2, list.get(list.size() - 1));
+    }
+
+    @Test
     void delete() {
         assertThrows(IllegalArgumentException.class, () -> {
             list.delete(null);
-        });
+         });
         assertFalse(list.delete(1));
         list.insert(1);
-        assertTrue(list.delete(1));
-        for (int i = 1; i <= 5; i++) list.insert(i);
-        assertFalse(list.delete(6));
+        list.append(2);
+        list.append(3);
+        assertFalse(list.delete(4));
         assertTrue(list.delete(2));
-        assertTrue(list.delete(3));
         assertTrue(list.delete(1));
-        assertTrue(list.delete(5));
+        assertEquals(1, list.size());
     }
 
     @Test
@@ -71,11 +82,7 @@ public class DoublyLinkedListTest {
             list.get(0);
         });
         list.insert(1);
-        list.insert(2);
-        list.insert(3);
         assertEquals(1, list.get(0));
-        assertEquals(2, list.get(1));
-        assertEquals(3, list.get(2));
         assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(-1);
         });
@@ -88,7 +95,7 @@ public class DoublyLinkedListTest {
     void reverse() {
         int[] elements = { 1, 2, 3, 4, 5 };
         for (int num : elements) {
-            list.insert(num);
+            list.append(num);
         }
         list.reverse();
         for (int i = 0; i < list.size(); i++) {
@@ -102,19 +109,19 @@ public class DoublyLinkedListTest {
             list.contains(null);
         });
         assertFalse(list.contains(0));
-        list.insert(0);
-        list.insert(1);
+        list.append(0);
+        list.append(1);
         assertTrue(list.contains(1));
     }
 
     @Test
     void indexOf() {
         assertThrows(IllegalArgumentException.class, () -> {
-            list.indexOf(null);
+           list.indexOf(null);
         });
         assertEquals(-1, list.indexOf(0));
-        list.insert(0);
-        list.insert(1);
+        list.append(0);
+        list.append(1);
         assertEquals(1, list.indexOf(1));
     }
 }

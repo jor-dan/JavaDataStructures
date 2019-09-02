@@ -1,3 +1,5 @@
+package LinkedLists;
+
 /**
  * Implementation of a Doubly Linked List
  * <p>
