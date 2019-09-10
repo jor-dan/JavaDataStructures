@@ -13,10 +13,11 @@ import java.util.NoSuchElementException;
 @DisplayName("Heap")
 public class HeapTests {
 
+    Heap heap;
+
     @Nested
     @DisplayName("Max Heap")
     class MaxHeapTest {
-        MaxHeap heap;
 
         @BeforeEach
         void instantiate() {
@@ -40,28 +41,30 @@ public class HeapTests {
         }
 
         @Test
+        @DisplayName("gets largest element")
         void getMax() {
             assertThrows(NoSuchElementException.class, () -> {
-                heap.getMax();
+                heap.get();
             });
             heap.insert(1);
             assertEquals(1, heap.size());
-            assertEquals(1, heap.getMax());
+            assertEquals(1, heap.get());
             assertEquals(1, heap.size());
             heap.insert(0);
             assertEquals(2, heap.size());
-            assertEquals(1, heap.getMax());
+            assertEquals(1, heap.get());
             assertEquals(2, heap.size());
             heap.insert(2);
             assertEquals(3, heap.size());
-            assertEquals(2, heap.getMax());
+            assertEquals(2, heap.get());
             assertEquals(3, heap.size());
         }
 
         @Test
+        @DisplayName("removes largest element")
         void removeMax() {
             assertThrows(NoSuchElementException.class, () -> {
-                heap.removeMax();
+                heap.remove();
             });
             Integer[] nums = {
                 4, 2, 1, 0, 3, 7, 6, 5, 9, 8, -5, -6, -9, 12, 11, 10, -10
@@ -71,7 +74,7 @@ public class HeapTests {
             }
             Arrays.sort(nums, Collections.reverseOrder());
             for (int num : nums) {
-                assertEquals(num, heap.removeMax());
+                assertEquals(num, heap.remove());
             }
         }
     }
@@ -79,7 +82,6 @@ public class HeapTests {
     @Nested
     @DisplayName("Min Heap")
     class MinHeapTest {
-        MinHeap heap;
 
         @BeforeEach
         void instantiate() {
@@ -103,28 +105,30 @@ public class HeapTests {
         }
 
         @Test
+        @DisplayName("gets smallest element")
         void getMin() {
             assertThrows(NoSuchElementException.class, () -> {
-                heap.getMin();
+                heap.get();
             });
             heap.insert(1);
             assertEquals(1, heap.size());
-            assertEquals(1, heap.getMin());
+            assertEquals(1, heap.get());
             assertEquals(1, heap.size());
             heap.insert(2);
             assertEquals(2, heap.size());
-            assertEquals(1, heap.getMin());
+            assertEquals(1, heap.get());
             assertEquals(2, heap.size());
             heap.insert(0);
             assertEquals(3, heap.size());
-            assertEquals(0, heap.getMin());
+            assertEquals(0, heap.get());
             assertEquals(3, heap.size());
         }
 
         @Test
+        @DisplayName("removes smallest element")
         void removeMin() {
             assertThrows(NoSuchElementException.class, () -> {
-                heap.removeMin();
+                heap.remove();
             });
             Integer[] nums = {
                 4, 2, 1, 0, 3, 7, 6, 5, 9, 8, -5, -6, -9, 12, 11, 10, -10
@@ -134,7 +138,7 @@ public class HeapTests {
             }
             Arrays.sort(nums);
             for (int num : nums) {
-                assertEquals(num, heap.removeMin());
+                assertEquals(num, heap.remove());
             }
         }
     }
