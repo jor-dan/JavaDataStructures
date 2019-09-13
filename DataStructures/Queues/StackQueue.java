@@ -58,9 +58,11 @@ public class StackQueue<T> {
      */
     public T dequeue() {
         if (s2.isEmpty()) {
-            while (!s1.isEmpty()) {
+            while (s1.size() > 1) {
                 s2.push(s1.pop());
             }
+            front = null;
+            return s1.pop();
         }
         return s2.pop();
     }

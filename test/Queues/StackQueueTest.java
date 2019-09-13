@@ -62,5 +62,7 @@ public class StackQueueTest {
         sq.enqueue(10);
         sq.dequeue();
         assertEquals(3, sq.peek());
+        while (!sq.isEmpty()) sq.dequeue();
+        assertNull(sq.peek());
     }
 }
