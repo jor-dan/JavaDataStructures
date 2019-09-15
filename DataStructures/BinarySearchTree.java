@@ -192,7 +192,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
      */
     public boolean contains(K key, V value) {
         if (value == null) throw new NullPointerException();
-        return get(key) == value;
+        V val = get(key);
+        return val != null && value.equals(val);
     }
 
     /**
