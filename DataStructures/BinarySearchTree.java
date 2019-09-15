@@ -5,34 +5,37 @@
  * such that the same concept behind binary search applies when searching it.
  * This gives balanced binary search trees an advantage in time complexity over
  * linear data structures like linked lists for most operations.
+ * <p>
+ * In this implementation, keys are mapped to values
+ * and the keys are used to sort the tree.
  *
  * @author Jordan Owens
- * @param <T> the type of elements in the binary search tree
+ * @param <K> the key's type
+ * @param <V> the value's type
  */
-public class BinarySearchTree<T extends Comparable<T>> {
+public class BinarySearchTree<K extends Comparable<K>, V> {
     /** Implementation of the nodes that make up the tree */
-    private static class Node<T> {
-        /** Element the node stores */
-        T element;
-        /** The node's left child */
-        Node<T> left;
-        /** The node's right child */
-        Node<T> right;
+    private static class Node<K, V> {
+        K key;
+        V value;
+        /** Node's left and right children */
+        Node<K, V> left, right;
 
         /**
-         * Constructs a node storing an element
+         * Constructs a leaf node storing a key/value pair
          *
-         * @param element the element to store in the node
+         * @param key the key to store in the node
+         * @param value the value to store in the node
          */
-        Node(T element) {
-            this.element = element;
-            this.left = null;
-            this.right = null;
+        Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+            this.left = this.right = null;
         }
     }
 
     /** Root of the tree */
-    private Node<T> root;
+    private Node<K, V> root;
     /** Number of elements in the tree */
     private int size;
 
@@ -61,32 +64,33 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     /**
-     * Inserts an element into the tree
+     * Inserts a key/value pair into the tree
      *
-     * @param element the element to insert
-     * @return {@code true} if the element was successfully inserted
-     *         {@code false} if the element already exists in the tree
-     * @throws NullPointerException if the element is null
+     * @param key the key to insert
+     * @param value the value to associate with the key
+     * @return {@code true} if the pair was successfully inserted
+     *         {@code false} if the key already exists in the tree
+     * @throws NullPointerException if the key or value is {@code null}
      */
-    public boolean insert(T element) {
-        if (element == null) throw new NullPointerException();
+    public boolean insert(K key, V value) {
+        if (key == null || value == null) throw new NullPointerException();
         if (root == null) {
-            root = new Node<>(element);
+            root = new Node<>(key, value);
             size++;
             return true;
         }
-        for (Node<T> current = root; current != null;) {
-            final int comp = element.compareTo(current.element);
+        for (Node<K, V> current = root; current != null;) {
+            final int comp = key.compareTo(current.key);
             if (comp < 0) {
                 if (current.left == null) {
-                    current.left = new Node<>(element);
+                    current.left = new Node<>(key, value);
                     size++;
                     return true;
                 }
                 current = current.left;
             } else if (comp > 0) {
                 if (current.right == null) {
-                    current.right = new Node<>(element);
+                    current.right = new Node<>(key, value);
                     size++;
                     return true;
                 }
@@ -97,84 +101,138 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     /**
-     * Removes an element from the tree
-     * @param element the element to remove
-     * @return {@code true} if the element was removed from the tree
-     * @throws NullPointerException if the element is null
+     * Inserts a key/value pair into the tree
+     * or overwrites any existing key/value pair with the new value.
+     *
+     * @param key the key to insert or update
+     * @param value the value to be associated with the key
+     * @throws NullPointerException if the key or value is {@code null}
      */
-    public boolean remove(T element) {
-        if (element == null) throw new NullPointerException();
-        int oldSize = size;
-        root = remove(root, element);
-        return size == oldSize - 1;
+    public void put(K key, V value) {
+        if (key == null || value == null) throw new NullPointerException();
+        root = put(root, key, value);
     }
 
-    private Node<T> remove(Node<T> root, T element) {
-        if (root == null) return null;
-        final int comp = element.compareTo(root.element);
+    private Node<K, V> put(Node<K, V> root, K key, V value) {
+        if (root == null) {
+            this.size++;
+            return new Node<>(key, value);
+        }
+        int comp = key.compareTo(root.key);
         if (comp < 0) {
-            root.left = remove(root.left, element);
+            root.left = put(root.left, key, value);
         } else if (comp > 0) {
-            root.right = remove(root.right, element);
+            root.right = put(root.right, key, value);
         } else {
-            if (root.left == null || root.right == null) {
-                this.size--;
-                return root.left == null ? root.right : root.left;
-            }
-            Node<T> min = root.right;
-            while (min.left != null) {
-                min = min.left;
-            }
-            root.element = min.element;
-            root.right = remove(root.right, min.element);
+            root.value = value;
         }
         return root;
     }
 
     /**
-     * Returns whether an element exists in the tree
-     *
-     * @param data element being searched for in the tree
-     * @return {@code true} if the element is in the tree
-     * @throws NullPointerException if data is null
+     * Removes a key/value pair from the tree
+     * @param key the key of the key/value pair to remove
+     * @return {@code true} if the pair was removed from the tree
+     * @throws NullPointerException if the key is {@code null}
      */
-    public boolean contains(T element) {
-        if (element == null) throw new NullPointerException();
-        for (Node<T> current = root; current != null;) {
-            final int comp = element.compareTo(current.element);
-            if (comp == 0) return true;
-            current = comp < 0 ? current.left : current.right;
+    public boolean remove(K key) {
+        if (key == null) throw new NullPointerException();
+        int oldSize = size;
+        root = remove(root, key);
+        return size == oldSize - 1;
+    }
+
+    private Node<K, V> remove(Node<K, V> root, K key) {
+        if (root == null) return null;
+        final int comp = key.compareTo(root.key);
+        if (comp < 0) {
+            root.left = remove(root.left, key);
+        } else if (comp > 0) {
+            root.right = remove(root.right, key);
+        } else {
+            if (root.left == null || root.right == null) {
+                this.size--;
+                return root.left == null ? root.right : root.left;
+            }
+            Node<K, V> min = root.right;
+            while (min.left != null) {
+                min = min.left;
+            }
+            root.key = min.key;
+            root.right = remove(root.right, min.key);
         }
-        return false;
+        return root;
     }
 
     /**
-     * Gets the smallest element in the tree
+     * Gets the value mapped to a key in the tree
      *
-     * @return the smallest element in the tree or
+     * @param key the key of the key/value pair
+     * @return the value the key is associated with
+     *         or {@code null} if the key does not exist in the tree
+     * @throws NullPointerException if key is {@code null}
+     */
+    public V get(K key) {
+        if (key == null) throw new NullPointerException();
+        for (Node<K, V> current = root; current != null;) {
+            final int comp = key.compareTo(current.key);
+            if (comp == 0) return current.value;
+            current = comp < 0 ? current.left : current.right;
+        }
+        return null;
+    }
+
+    /**
+     * Returns whether a key/value pair exists in the tree
+     *
+     * @param key the key of the pair being searched for in the tree
+     * @param value the value of the pair being searched for in the tree
+     * @return {@code true} if the key/value pair is in the tree
+     * @throws NullPointerException if the key or value is {@code null}
+     */
+    public boolean contains(K key, V value) {
+        if (value == null) throw new NullPointerException();
+        return get(key) == value;
+    }
+
+    /**
+     * Returns whether a key exists in the tree
+     *
+     * @param key the key being searched for in the tree
+     * @return {@code true} if the key is in the tree
+     * @throws NullPointerException if the key is {@code null}
+     */
+    public boolean containsKey(K key) {
+        return get(key) != null;
+    }
+
+    /**
+     * Gets the smallest key in the tree
+     *
+     * @return the smallest key in the tree or
      *         {@code null} if the tree is empty
      */
-    public T min() {
+    public K min() {
         if (root == null) return null;
-        Node<T> min = root;
+        Node<K, V> min = root;
         while (min.left != null) {
             min = min.left;
         }
-        return min.element;
+        return min.key;
     }
 
     /**
-     * Gets the largest element in the tree
+     * Gets the largest key in the tree
      *
-     * @return the largest element in the tree or
+     * @return the largest key in the tree or
      *         {@code null} if the tree is empty
      */
-    public T max() {
+    public K max() {
         if (root == null) return null;
-        Node<T> max = root;
+        Node<K, V> max = root;
         while (max.right != null) {
             max = max.right;
         }
-        return max.element;
+        return max.key;
     }
 }
