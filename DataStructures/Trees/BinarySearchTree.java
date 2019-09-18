@@ -1,3 +1,5 @@
+package Trees;
+
 /**
  * A binary search tree is a data structure where each node has at most
  * two child nodes (left and right). The left child is less than the parent and
