@@ -134,4 +134,31 @@ public class AVLTreeTest {
         assertTrue(tree.containsKey(5));
         assertFalse(tree.containsKey(15));
     }
+
+
+    @Test
+    void min() {
+        assertNull(tree.min());
+        tree.insert(2, "2");
+        assertEquals(2, tree.min());
+        tree.insert(3, "3");
+        assertEquals(2, tree.min());
+        tree.insert(1, "1");
+        assertEquals(1, tree.min());
+        tree.insert(0, "0");
+        assertEquals(0, tree.min());
+    }
+
+    @Test
+    void max() {
+        assertNull(tree.max());
+        tree.insert(2, "2");
+        assertEquals(2, tree.max());
+        tree.insert(1, "1");
+        assertEquals(2, tree.max());
+        tree.insert(3, "3");
+        assertEquals(3, tree.max());
+        tree.insert(4, "4");
+        assertEquals(4, tree.max());
+    }
 }

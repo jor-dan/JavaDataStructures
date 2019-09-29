@@ -247,4 +247,34 @@ public class AVLTree<K extends Comparable<K>, V> {
     public boolean containsKey(K key) {
         return get(root, key) != null;
     }
+
+    /**
+     * Gets the smallest key in the tree
+     *
+     * @return the smallest key in the tree or
+     *         {@code null} if the tree is empty
+     */
+    public K min() {
+        if (root == null) return null;
+        Node<K, V> min = root;
+        while (min.left != null) {
+            min = min.left;
+        }
+        return min.key;
+    }
+
+    /**
+     * Gets the largest key in the tree
+     *
+     * @return the largest key in the tree or
+     *         {@code null} if the tree is empty
+     */
+    public K max() {
+        if (root == null) return null;
+        Node<K, V> max = root;
+        while (max.right != null) {
+            max = max.right;
+        }
+        return max.key;
+    }
 }
