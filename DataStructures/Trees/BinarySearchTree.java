@@ -105,14 +105,15 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
     /**
      * Inserts a key/value pair into the tree
      * or overwrites any existing key/value pair with the new value.
+     * Deletes key/value pair if the new value is {@code null}.
      *
      * @param key the key to insert or update
-     * @param value the value to be associated with the key
-     * @throws NullPointerException if the key or value is {@code null}
+     * @param value the new value
+     * @throws NullPointerException if the key is {@code null}
      */
     public void put(K key, V value) {
-        if (key == null || value == null) throw new NullPointerException();
-        root = put(root, key, value);
+        if (key == null) throw new NullPointerException();
+        root = value != null ? put(root, key, value) : remove(root, key);
     }
 
     private Node<K, V> put(Node<K, V> root, K key, V value) {

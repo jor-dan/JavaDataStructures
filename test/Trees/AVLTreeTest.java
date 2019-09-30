@@ -49,9 +49,6 @@ public class AVLTreeTest {
             tree.put(null, null);
         });
         assertThrows(NullPointerException.class, () -> {
-            tree.put(1, null);
-        });
-        assertThrows(NullPointerException.class, () -> {
             tree.put(null, "1");
         });
         int[] numbers = { 4, 3, 2, 7, 6, 8 };
@@ -69,6 +66,9 @@ public class AVLTreeTest {
         tree.put(123, "123");
         assertEquals(numbers.length + 1, tree.size());
         assertEquals("123", tree.get(123));
+        tree.put(123, null);
+        assertFalse(tree.containsKey(123));
+        assertEquals(numbers.length, tree.size());
     }
 
     @Test

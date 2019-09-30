@@ -152,13 +152,15 @@ public class AVLTree<K extends Comparable<K>, V> {
     /**
      * Inserts a key/value pair into the tree
      * or overwrites any existing key/value pair with the new value.
+     * Deletes key/value pair if the new value is {@code null}.
      *
      * @param key the key to insert or update
-     * @param value the value to be associated with the key
-     * @throws NullPointerException if the key or value is {@code null}
+     * @param value the new value
+     * @throws NullPointerException if the key is {@code null}
      */
     public void put(K key, V value) {
-        if (!insert(key, value)) get(root, key).value = value;
+        if (value == null) remove(key);
+        else if (!insert(key, value)) get(root, key).value = value;
     }
 
     /**
