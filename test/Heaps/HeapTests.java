@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 @DisplayName("Heap")
 public class HeapTests {
 
-    Heap heap;
+    Heap<Integer> heap;
 
     @Nested
     @DisplayName("Max Heap")
@@ -21,7 +21,7 @@ public class HeapTests {
 
         @BeforeEach
         void instantiate() {
-            heap = new MaxHeap();
+            heap = new MaxHeap<>();
         }
 
         @Test
@@ -85,7 +85,7 @@ public class HeapTests {
 
         @BeforeEach
         void instantiate() {
-            heap = new MinHeap();
+            heap = new MinHeap<>();
         }
 
         @Test

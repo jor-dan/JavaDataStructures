@@ -7,21 +7,22 @@ import java.util.NoSuchElementException;
  * less than or equal to the values of its children.
  *
  * @author Jordan Owens
+ * @param <T> the type of elements in the min heap
  */
-public class MinHeap extends Heap {
+public class MinHeap<T extends Comparable<T>> extends Heap<T> {
 
     public MinHeap() {
         super();
     }
 
-    private void heapifyDown() {
+    protected void heapifyDown() {
         int i = 0, prevSmallest;
         do {
             int left = left(i), right = right(i), smallest = prevSmallest = i;
-            if (left < heap.size() && heap.get(i) > heap.get(left)) {
+            if (left < heap.size() && greater(i, left)) {
                 smallest = left;
             }
-            if (right < heap.size() && heap.get(smallest) > heap.get(right)) {
+            if (right < heap.size() && greater(smallest, right)) {
                 smallest = right;
             }
             if (smallest != i) {
@@ -34,7 +35,7 @@ public class MinHeap extends Heap {
     private void heapifyUp() {
         int i = heap.size() - 1;
         int parent = parent(i);
-        while (i > 0 && heap.get(parent) > heap.get(i)) {
+        while (i > 0 && greater(parent, i)) {
             swap(parent, i);
             i = parent;
             parent = parent(i);
@@ -42,51 +43,51 @@ public class MinHeap extends Heap {
     }
 
     /**
-     * Inserts a number into the heap
+     * Inserts an element into the heap
      *
-     * @param value the number to insert
+     * @param element the element to insert
      */
-    public void insert(int value) {
-        heap.add(value);
+    public void insert(T element) {
+        heap.add(element);
         heapifyUp();
     }
 
     /**
-     * Gets the smallest number in the heap without removing it
+     * Gets the smallest element in the heap without removing it
      *
-     * @return the largest number in the heap
+     * @return the largest element in the heap
      * @throws NoSuchElementException if the heap is empty
      */
-    public int getMin() {
+    public T getMin() {
         if (heap.isEmpty()) {
             throw new NoSuchElementException("Heap is empty");
         }
         return heap.get(0);
     }
 
-    public int get() {
+    public T get() {
         return getMin();
     }
 
     /**
-     * Removes the smallest number in the heap
+     * Removes the smallest element in the heap
      *
-     * @return the smallest number in the heap
+     * @return the smallest element in the heap
      * @throws NoSuchElementException if the heap is empty
      */
-    public int removeMin() {
+    public T removeMin() {
         if (heap.isEmpty()) {
             throw new NoSuchElementException("Heap is empty");
         }
         if (heap.size() == 1) {
             return heap.remove(0);
         }
-        int min = heap.set(0, heap.remove(heap.size() - 1));
+        T min = heap.set(0, heap.remove(heap.size() - 1));
         heapifyDown();
         return min;
     }
 
-    public int remove() {
+    public T remove() {
         return removeMin();
     }
 }

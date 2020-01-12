@@ -7,8 +7,9 @@ import java.util.NoSuchElementException;
  * greater than or equal to the values of its children.
  *
  * @author Jordan Owens
+ * @param <T> the type of elements in the max heap
  */
-public class MaxHeap extends Heap {
+public class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 
     public MaxHeap() {
         super();
@@ -18,10 +19,10 @@ public class MaxHeap extends Heap {
         int i = 0, prevLargest;
         do {
             int left = left(i), right = right(i), largest = prevLargest = i;
-            if (left < heap.size() && heap.get(left) > heap.get(i)) {
+            if (left < heap.size() && greater(left, i)) {
                 largest = left;
             }
-            if (right < heap.size() && heap.get(right) > heap.get(largest)) {
+            if (right < heap.size() && greater(right, largest)) {
                 largest = right;
             }
             if (largest != i) {
@@ -34,7 +35,7 @@ public class MaxHeap extends Heap {
     private void heapifyUp() {
         int i = heap.size() - 1;
         int parent = parent(i);
-        while (i > 0 && heap.get(i) > heap.get(parent)) {
+        while (i > 0 && greater(i, parent)) {
             swap(parent, i);
             i = parent;
             parent = parent(i);
@@ -42,51 +43,51 @@ public class MaxHeap extends Heap {
     }
 
     /**
-     * Inserts a number into the heap
+     * Inserts an element into the heap
      *
-     * @param value the number to insert
+     * @param element the element to insert
      */
-    public void insert(int value) {
-        heap.add(value);
+    public void insert(T element) {
+        heap.add(element);
         heapifyUp();
     }
 
     /**
-     * Gets the largest number in the heap without removing it
+     * Gets the largest element in the heap without removing it
      *
-     * @return the largest number in the heap
+     * @return the largest element in the heap
      * @throws NoSuchElementException if the heap is empty
      */
-    public int getMax() {
+    public T getMax() {
         if (heap.isEmpty()) {
             throw new NoSuchElementException("Heap is empty");
         }
         return heap.get(0);
     }
 
-    public int get() {
+    public T get() {
         return getMax();
     }
 
     /**
-     * Removes the largest number in the heap
+     * Removes the largest element in the heap
      *
-     * @return the largest number in the heap
+     * @return the largest element in the heap
      * @throws NoSuchElementException if the heap is empty
      */
-    public int removeMax() {
+    public T removeMax() {
         if (heap.isEmpty()) {
             throw new NoSuchElementException("Heap is empty");
         }
         if (heap.size() == 1) {
             return heap.remove(0);
         }
-        int max = heap.set(0, heap.remove(heap.size() - 1));
+        T max = heap.set(0, heap.remove(heap.size() - 1));
         heapifyDown();
         return max;
     }
 
-    public int remove() {
+    public T remove() {
         return removeMax();
     }
 }

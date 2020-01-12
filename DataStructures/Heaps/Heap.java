@@ -1,15 +1,17 @@
 package Heaps;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * Binary Heap base class for array implementations.
  *
  * @author Jordan Owens
+* @param <T> the type of elements in the heap
  */
-public abstract class Heap {
+public abstract class Heap<T extends Comparable<T>> {
 
-    protected final ArrayList<Integer> heap;
+    protected final ArrayList<T> heap;
 
     public Heap() {
         heap = new ArrayList<>();
@@ -34,11 +36,11 @@ public abstract class Heap {
     }
 
     /**
-     * Inserts a number into the heap
+     * Inserts an element into the heap
      *
-     * @param value the number to insert
+     * @param element the element to insert
      */
-    public abstract void insert(int value);
+    public abstract void insert(T element);
 
     /**
      * Gets the largest number in the heap (Max Heap)
@@ -48,16 +50,16 @@ public abstract class Heap {
      * @return the largest or smallest number in the heap
      * @throws NoSuchElementException if the heap is empty
      */
-    public abstract int get();
+    public abstract T get();
 
     /**
-     * Removes the largest number in the heap (Max Heap)
-     * or the smallest number in the heap (Min Heap)
+     * Removes the largest element in the heap (Max Heap)
+     * or the smallest element in the heap (Min Heap)
      *
-     * @return the largest or smallest number in the heap
+     * @return the largest or smallest element in the heap
      * @throws NoSuchElementException if the heap is empty
      */
-    public abstract int remove();
+    public abstract T remove();
 
     /**
      * Gets the index of the child's parent
@@ -97,5 +99,16 @@ public abstract class Heap {
      */
     protected void swap(int a, int b) {
         heap.set(a, heap.set(b, heap.get(a)));
+    }
+
+    /**
+     * Returns whether the element at index a is greater than element at index b
+     *
+     * @param a index of element to compare with element at index b
+     * @param b index of element to compare with element at index a
+     * @return {@code true} if element at index a is greater than element at b
+     */
+    protected boolean greater(int a, int b) {
+        return heap.get(a).compareTo(heap.get(b)) > 0;
     }
 }
