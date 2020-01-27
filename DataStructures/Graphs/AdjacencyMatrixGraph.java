@@ -1,39 +1,45 @@
 package Graphs;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * Adjacency list representation of a graph.
+ * Adjacency matrix representation of a graph.
  *
  * @author Jordan Owens
- * @param <T> the type of elements in the adjacency list
  */
-public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
+public class AdjacencyMatrixGraph implements Graph<Integer> {
 
-    /** Maps each vertex to its adjacent vertices */
-    private final HashMap<T, HashSet<T>> vertices;
+    /** Adjacency matrix */
+    private boolean[][] graph;
     /** The number of edges in the graph */
     private int edges;
     /** Whether the graph is directed or undirected */
     private final boolean directed;
 
     /**
-     * Constructs an adjacency list graph
+     * Constructs an adjacency matrix graph with vertices numbered [0, vertices)
      *
+     * @param vertices the number of vertices the graph should have
      * @param directed {@code true} if the graph should be directed,
      *                 {@code false} if the graph should be undirected
+     * @throws IllegalArgumentException if {@code vertices} < 1
      */
-    public AdjacencyListGraph(boolean directed) {
-        this.vertices = new HashMap<>();
+    public AdjacencyMatrixGraph(int vertices, boolean directed) {
+        if (vertices < 1) {
+            throw new IllegalArgumentException("Vertices must be positive");
+        }
+        this.graph = new boolean[vertices][vertices];
         this.edges = 0;
         this.directed = directed;
     }
 
-    /** Constructs a directed adjacency list graph */
-    public AdjacencyListGraph() {
-        this(true);
+    /**
+     * Constructs a directed adjacency matrix graph
+     * with vertices numbered [0, vertices)
+     *
+     * @param vertices the number of vertices the graph should have
+     * @throws IllegalArgumentException if {@code vertices} < 1
+     */
+    public AdjacencyMatrixGraph(int vertices) {
+        this(vertices, true);
     }
 
     /**
@@ -52,7 +58,7 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
      * @return the number of vertices in the graph
      */
     public int vertices() {
-        return vertices.size();
+        return graph.length;
     }
 
     /**
@@ -65,13 +71,29 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
     }
 
     /**
+     * Expands the adjacency matrix to hold more vertices
+     *
+     * @param vertices the new number of vertices for the matrix to hold
+     * @return {@code true} if the adjacency matrix expanded
+     */
+    public boolean expand(int vertices) {
+        if (vertices <= graph.length) return false;
+        boolean[][] newGraph = new boolean[vertices][vertices];
+        for (int i = 0; i < graph.length; i++) {
+            System.arraycopy(graph[i], 0, newGraph[i], 0, graph[i].length);
+        }
+        graph = newGraph;
+        return true;
+    }
+
+    /**
      * Returns whether a vertex exists in the graph
      *
      * @param vertex the vertex being searched for in the graph
      * @return {@code true} if the vertex is in the graph
      */
-    public boolean containsVertex(T vertex) {
-        return vertices.containsKey(vertex);
+    public boolean containsVertex(Integer vertex) {
+        return vertex != null && vertex >= 0 && vertex < graph.length;
     }
 
     /**
@@ -81,65 +103,27 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
      * @param to vertex that is the head of the edge
      * @return {@code true} if the edge (from, to) exists in the graph
      */
-    public boolean containsEdge(T from, T to) {
-        Set<T> edges = vertices.get(from);
-        return edges != null && edges.contains(to);
-    }
-
-    /**
-     * Adds a vertex to the graph
-     *
-     * @param vertex the vertex being added to the graph
-     * @return {@code true} if the vertex was added to the graph
-     *         {@code false} if the vertex already existed in the graph
-     * @throws NullPointerException if {@code vertex} is {@code null}
-     */
-    public boolean addVertex(T vertex) {
-        if (vertex == null) throw new NullPointerException();
-        if (containsVertex(vertex)) return false;
-        vertices.put(vertex, new HashSet<>());
-        return true;
+    public boolean containsEdge(Integer from, Integer to) {
+        return containsVertex(from) && containsVertex(to) && graph[from][to];
     }
 
     /**
      * Adds a directed edge between two vertices in a directed graph.
      * Adds an undirected edge between two vertices in an undirected graph.
-     * Adds the two vertices to the graph if they aren't present.
      *
-     * @param from vertex that is the tail of the directed edge being added
-     * @param to vertex that is the head of the directed edge being added
+     * @param from vertex that is the tail of the edge being added
+     * @param to vertex that is the head of the edge being added
      * @return {@code true} if an edge was added between the two vertices
      *         {@code false} if an edge already existed between the two vertices
-     *                       or {@code from} or {@code to} are {@code null}
+     *                       or at least one vertex isn't in [0, vertices)
      */
-    public boolean addEdge(T from, T to) {
-        if (from == null || to == null) return false;
-        if (!vertices.computeIfAbsent(from, k -> new HashSet<>()).add(to)) {
+    public boolean addEdge(Integer from, Integer to) {
+        if (!containsVertex(from) || !containsVertex(to) || graph[from][to]) {
             return false;
         }
-        if (!directed) {
-            vertices.computeIfAbsent(to, k -> new HashSet<>()).add(from);
-        } else if (!containsVertex(to)) {
-            vertices.put(to, new HashSet<>());
-        }
+        graph[from][to] = true;
+        if (!directed) graph[to][from] = true;
         this.edges++;
-        return true;
-    }
-
-    /**
-     * Removes a vertex and edges incident to the vertex from the graph.
-     *
-     * @param vertex the vertex being removed from the graph
-     * @return {@code true} if the vertex was removed from the graph
-     *         {@code false} if the vertex is not in the graph
-     */
-    public boolean removeVertex(T vertex) {
-        Set<T> removed = vertices.remove(vertex);
-        if (removed == null) return false;
-        this.edges -= removed.size();
-        for (Set<T> adjacent : vertices.values()) {
-            if (adjacent.remove(vertex) && directed) this.edges--;
-        }
         return true;
     }
 
@@ -152,15 +136,12 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
      * @return {@code true} if the edge between the two vertices was removed
      *         {@code false} if there wasn't an edge between the two vertices
      */
-    public boolean removeEdge(T from, T to) {
-        Set<T> edges = vertices.get(from);
-        boolean removed = edges != null && edges.remove(to);
-        if (!directed) {
-            edges = vertices.get(to);
-            if (edges != null) edges.remove(from);
-        }
-        if (removed) this.edges--;
-        return removed;
+    public boolean removeEdge(Integer from, Integer to) {
+        if (!containsEdge(from, to)) return false;
+        graph[from][to] = false;
+        if (!directed) graph[to][from] = false;
+        this.edges--;
+        return true;
     }
 
     /**
@@ -168,9 +149,9 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
      *
      * @param vertex the vertex to get the degree of
      * @return the number of edges incident to {@code vertex}
-     * @throws NullPointerException if {@code vertex} is {@code null}
+     *         or -1 if {@code vertex} is not a vertex in the graph
      */
-    public int degree(T vertex) {
+    public int degree(Integer vertex) {
         int outdegree = outdegree(vertex);
         return directed ? outdegree + indegree(vertex) : outdegree;
     }
@@ -183,12 +164,11 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
      *         or the degree of {@code vertex} if the graph is undirected
      *         or -1 if {@code vertex} is not a vertex in the graph
      */
-    public int indegree(T vertex) {
+    public int indegree(Integer vertex) {
         if (!containsVertex(vertex)) return -1;
-        if (!directed) return outdegree(vertex);
         int indegree = 0;
-        for (Set<T> adjacent : vertices.values()) {
-            if (adjacent.contains(vertex)) indegree++;
+        for (boolean[] edges : graph) {
+            if (edges[vertex]) indegree++;
         }
         return indegree;
     }
@@ -201,7 +181,12 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
      *         or the degree of {@code vertex} if the graph is undirected
      *         or -1 if {@code vertex} is not a vertex in the graph
      */
-    public int outdegree(T vertex) {
-        return containsVertex(vertex) ? vertices.get(vertex).size() : -1;
+    public int outdegree(Integer vertex) {
+        if (!containsVertex(vertex)) return -1;
+        int outdegree = 0;
+        for (boolean edge : graph[vertex]) {
+            if (edge) outdegree++;
+        }
+        return outdegree;
     }
 }
