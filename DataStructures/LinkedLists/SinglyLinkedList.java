@@ -14,40 +14,42 @@ public class SinglyLinkedList<T> {
     /** Implementation of the nodes that make up the linked list */
     private static class Node<T> {
         /** Element the node stores */
-        T data;
+        T element;
         /** Pointer to the next node in the list */
         Node<T> next;
 
         /**
          * Constructs a node storing an element
          *
-         * @param data the element to be stored in the node
+         * @param element the element to be stored in the node
          */
-        Node(T data) {
-            this.data = data;
+        Node(T element) {
+            this.element = element;
             this.next = null;
         }
 
         /**
          * Constructs a node storing an element and pointing to another node
          *
-         * @param data the element to be stored in the node
+         * @param element the element to be stored in the node
          * @param next the next node in the list to point to
          */
-        Node(T data, Node<T> next) {
-            this.data = data;
+        Node(T element, Node<T> next) {
+            this.element = element;
             this.next = next;
         }
     }
 
-    /** Head of the list */
+    /** Front of the list */
     private Node<T> head;
+    /** Back of the list */
+    private Node<T> tail;
     /** Size of the list */
     private int size;
 
     /** Constructs an empty linked list */
     public SinglyLinkedList() {
-        this.head = null;
+        this.head = this.tail = null;
         this.size = 0;
     }
 
@@ -58,20 +60,11 @@ public class SinglyLinkedList<T> {
      * @throws IllegalArgumentException if array or its elements are null
      */
     public SinglyLinkedList(T[] array) {
-        if (array == null) throw new IllegalArgumentException();
-        this.head = null;
+        if (array == null) throw new NullPointerException();
+        this.head = this.tail = null;
         this.size = 0;
-        Node<T> prev = head;
         for (T element : array) {
-            if (element == null) throw new IllegalArgumentException();
-            if (head == null) {
-                head = new Node<>(element);
-                prev = head;
-            } else {
-                prev.next = new Node<>(element);
-                prev = prev.next;
-            }
-            size++;
+            add(element);
         }
     }
 
@@ -96,58 +89,112 @@ public class SinglyLinkedList<T> {
     /**
      * Inserts an element at the front of the list
      *
-     * @param data the data being inserted
-     * @throws IllegalArgumentException if data is null
+     * @param element the element being inserted
+     * @throws NullPointerException if data is null
      */
-    public void insert(T data) {
-        if (data == null) throw new IllegalArgumentException();
-        head = new Node<>(data, head);
-        size++;
+    public void insert(T element) {
+        add(0, element);
     }
 
     /**
      * Inserts an element at the back of the list
      *
-     * @param data the data being inserted
-     * @throws IllegalArgumentException if data is null
+     * @param element the element being inserted
+     * @throws NullPointerException if element is null
      */
-    public void append(T data) {
-        if (data == null) throw new IllegalArgumentException();
+    public void add(T element) {
+        add(size(), element);
+    }
+
+    /**
+     * Adds an element at a specific position in the list
+     *
+     * @param index the position to add the element at
+     * @param element the element to add to the list
+     * @throws NullPointerException if element is null
+     * @throws IndexOutOfBoundsException if {@code index < 0 || index > size()}
+     */
+    public void add(int index, T element) {
+        if (element == null) throw new NullPointerException();
+        if (index == 0) {
+            head = new Node<>(element, head);
+            if (tail == null) tail = head;
+        } else if (index == size()) {
+            tail.next = new Node<>(element);
+            tail = tail.next;
+        } else {
+            Node<T> before = node(index - 1);
+            before.next = new Node<>(element, before.next);
+        }
         size++;
-        if (head == null) {
-            head = new Node<>(data);
-            return;
-        }
-        Node<T> current = head;
-        while (current.next != null) {
-            current = current.next;
-        }
-        current.next = new Node<>(data);
     }
 
     /**
      * Removes an element from the list
      *
-     * @param data the data being removed
+     * @param o the element being removed
      * @return {@code true} if the deletion was successful
-     * @throws IllegalArgumentException if data is null
+     * @throws NullPointerException if element is null
      */
-    public boolean delete(T data) {
-        if (data == null) throw new IllegalArgumentException();
+    public boolean remove(Object o) {
+        if (o == null) throw new NullPointerException();
         if (head == null) return false;
-        if (data.equals(head.data)) {
+        if (o.equals(head.element)) {
+            if (head == tail) tail = tail.next;
             head = head.next;
             size--;
             return true;
         }
         for (Node<T> curr = head; curr.next != null; curr = curr.next) {
-            if (data.equals(curr.next.data)) {
+            if (o.equals(curr.next.element)) {
+                if (curr.next == tail) tail = curr;
                 curr.next = curr.next.next;
                 size--;
                 return true;
             }
         }
         return false;
+    }
+
+    public T remove(int index) {
+        if (index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+        T prev;
+        if (index == 0) {
+            prev = head.element;
+            if (head == tail) {
+                head = tail = null;
+            } else {
+                head = head.next;
+            }
+        } else {
+            Node<T> before = node(index - 1);
+            prev = before.next.element;
+            if (before.next == tail) {
+                tail = before;
+                before.next = null;
+            } else {
+                before.next = before.next.next;
+            }
+        }
+        size--;
+        return prev;
+    }
+
+    /**
+     * Replaces an element in the list
+     *
+     * @param index the index of the element to replace
+     * @param element the new element to replace the old element with
+     * @return the replaced element
+     * @throws NullPointerException if the new element is null
+     * @throws IndexOutOfBoundsException if {@code index < 0 || index >= size()}
+     */
+    public T set(int index, T element) {
+        if (element == null) throw new NullPointerException();
+        Node<T> node = node(index);
+        T prev = node.element;
+        node.element = element;
+        return prev;
     }
 
     /**
@@ -170,13 +217,17 @@ public class SinglyLinkedList<T> {
      *
      * @param index the index of the element to return
      * @return the element at the specified index
-     * @throws IndexOutOfBoundsException if index < 0 or index >= size()
+     * @throws IndexOutOfBoundsException if {@code index < 0 || index >= size()}
      */
     public T get(int index) {
-        if (head != null && index < size()) {
-            for (Node<T> current = head; index >= 0; index--) {
-                if (index == 0) return current.data;
-                current = current.next;
+        return node(index).element;
+    }
+
+    private Node<T> node(int index) {
+        if (index < size) {
+            for (Node<T> curr = head; index >= 0; index--) {
+                if (index == 0) return curr;
+                curr = curr.next;
             }
         }
         throw new IndexOutOfBoundsException();
@@ -185,27 +236,27 @@ public class SinglyLinkedList<T> {
     /**
      * Returns if an element is in the list
      *
-     * @param data element being searched for in the list
+     * @param o element being searched for in the list
      * @return {@code true} if the element is in the list
-     * @throws IllegalArgumentException if data is null
+     * @throws NullPointerException if element is null
      */
-    public boolean contains(T data) {
-        return indexOf(data) >= 0;
+    public boolean contains(Object o) {
+        return indexOf(o) >= 0;
     }
 
     /**
      * Finds the index the element first appears at in the list
      *
-     * @param data element being searched for in the list
+     * @param o element being searched for in the list
      * @return the index the element appears at in the list
      *         or -1 if the element is not in the list
-     * @throws IllegalArgumentException if data is null
+     * @throws NullPointerException if data is null
      */
-    public int indexOf(T data) {
-        if (data == null) throw new IllegalArgumentException();
+    public int indexOf(Object o) {
+        if (o == null) throw new NullPointerException();
         Node<T> current = head;
         for (int i = 0; current != null; i++) {
-            if (data.equals(current.data)) return i;
+            if (o.equals(current.element)) return i;
             current = current.next;
         }
         return -1;
