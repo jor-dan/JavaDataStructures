@@ -20,7 +20,7 @@ public class AdjacencyMatrixGraph implements Graph<Integer> {
      * @param vertices the number of vertices the graph should have
      * @param directed {@code true} if the graph should be directed,
      *                 {@code false} if the graph should be undirected
-     * @throws IllegalArgumentException if {@code vertices} < 1
+     * @throws IllegalArgumentException if {@code vertices < 1}
      */
     public AdjacencyMatrixGraph(int vertices, boolean directed) {
         if (vertices < 1) {
@@ -36,7 +36,7 @@ public class AdjacencyMatrixGraph implements Graph<Integer> {
      * with vertices numbered [0, vertices)
      *
      * @param vertices the number of vertices the graph should have
-     * @throws IllegalArgumentException if {@code vertices} < 1
+     * @throws IllegalArgumentException if {@code vertices < 1}
      */
     public AdjacencyMatrixGraph(int vertices) {
         this(vertices, true);

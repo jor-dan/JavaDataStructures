@@ -81,25 +81,18 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
             size++;
             return true;
         }
+        Node<K, V> prev = root;
+        int comp = 0;
         for (Node<K, V> current = root; current != null;) {
-            final int comp = key.compareTo(current.key);
-            if (comp < 0) {
-                if (current.left == null) {
-                    current.left = new Node<>(key, value);
-                    size++;
-                    return true;
-                }
-                current = current.left;
-            } else if (comp > 0) {
-                if (current.right == null) {
-                    current.right = new Node<>(key, value);
-                    size++;
-                    return true;
-                }
-                current = current.right;
-            } else current = null;
+            comp = key.compareTo(current.key);
+            if (comp == 0) return false;
+            prev = current;
+            current = comp < 0 ? current.left : current.right;
         }
-        return false;
+        if (comp < 0) prev.left = new Node<>(key, value);
+        else prev.right = new Node<>(key, value);
+        size++;
+        return true;
     }
 
     /**
@@ -195,8 +188,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
      */
     public boolean contains(K key, V value) {
         if (value == null) throw new NullPointerException();
-        V val = get(key);
-        return val != null && value.equals(val);
+        return value.equals(get(key));
     }
 
     /**
